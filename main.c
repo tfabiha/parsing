@@ -5,27 +5,27 @@
 
 char ** parse_args(char * line)
 {
-  /*
-  Use the following header: char ** parse_args( char * line );
-It should take a string with the command line invocation of a program (like "ls -a -l")
-    Note that there is a " " between each argument
-Return an array of pointers to each individual argument in the parameter string, that could be used for execvp()
-For example, the following code should work (assuming all variables are declared appropriately:
-    char ** args = parse_args( line );
-    execvp(args[0], args);
-You can make the following assumptions:
-    There is only 1 space between each argument in the original string
-    The original string contains no more than 5 arguments
-    The original string is correctly formatted
-  */
+  char *s1 = line;
+  char ** arr = malloc(10);
+  int counter = 0;
 
+  while (s1)
+  {
+    arr[counter] = malloc(256);
+    char * s = strsep(&s1, " ");
+    strcpy(arr[counter], s);
+    counter++;
+  }
 
+  arr[counter] = malloc(256);
+  arr[counter] = NULL;
 
+  return arr;
 }
 
 int main()
 {
-  //char ln[] = "ls -a -l"
-  //char ** parsed = parse_args(ln)
-  //execvp(parsed[0], parsed)
+  char ln[100] = "ls -a -l";
+  char ** parsed = parse_args(ln);
+  execvp(parsed[0], parsed);
 }
