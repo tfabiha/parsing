@@ -5,19 +5,17 @@
 
 char ** parse_args(char * line)
 {
-  char *s1 = line;
-  char ** arr = malloc(10);
+  char ** arr = malloc(5 * sizeof(char *));
   int counter = 0;
 
-  while (s1)
+  while (line)
   {
     arr[counter] = malloc(256);
-    char * s = strsep(&s1, " ");
+    char *s = strsep(&line, " ");
     strcpy(arr[counter], s);
     counter++;
   }
 
-  arr[counter] = malloc(256);
   arr[counter] = NULL;
 
   return arr;
@@ -25,7 +23,10 @@ char ** parse_args(char * line)
 
 int main()
 {
+  printf("executing ls -a -l: \n");
   char ln[100] = "ls -a -l";
   char ** parsed = parse_args(ln);
   execvp(parsed[0], parsed);
+
+  return 0;
 }
